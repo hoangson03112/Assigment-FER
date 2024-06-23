@@ -1,0 +1,20 @@
+{
+  "jobs": [
+    {
+      "id": "1",
+      "name": "hoc bai",
+      "description": "học bài sdjfkldsfls",
+      "isComplete": false,
+      "priority": 1,
+      "date": "2024-06-02"
+    },
+    {
+      "id": "2",
+      "name": "lam viec nha",
+      "description": "làm việc nhà abcdefg",
+      "isComplete": false,
+      "priority": 2,
+      "date": "2024-06-03"
+    }
+  ]
+}

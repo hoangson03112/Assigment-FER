@@ -1,0 +1,12 @@
+#App{
+    height: 100vh;
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.rounded-table {
+    border-radius: 15px;
+    overflow: hidden;
+}
