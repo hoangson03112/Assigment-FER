@@ -9,6 +9,7 @@ import { ModalAdd } from "./component/ModalAdd";
 import { ModalUpdate } from "./component/ModalUpdate";
 import { ModalDetail } from "./component/ModalDetail";
 import { ModalJobsSuccess } from "./component/ModalJobsSuccess";
+
 function App() {
   const [jobs, setJobs] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
@@ -135,8 +136,9 @@ function App() {
           <Button
             className="float-start m-4"
             variant="success"
-            onClick={()=>{setshowJobsSuccess(true)}}
-            
+            onClick={() => {
+              setshowJobsSuccess(true);
+            }}
           >
             Công việc đã hoàn Thành
           </Button>
@@ -166,7 +168,7 @@ function App() {
                 .filter((job) => !job.isComplete)
                 .map((job, index) => (
                   <tr className="text-center" key={index}>
-                    <td>{job.id}</td>
+                    <td>{index + 1}</td>
                     <td>{job.name}</td>
                     <td>{job.date}</td>
                     <td>{job.priority}</td>
@@ -175,7 +177,7 @@ function App() {
                         variant="warning"
                         onClick={() => handleComplete(job)}
                       >
-                        Đã Hoàn Thành
+                        Hoàn Thành
                       </Button>
                       <Button
                         variant="primary"
@@ -200,7 +202,8 @@ function App() {
                 ))}
             </tbody>
           </Table>
-          <ModalJobsSuccess showJobsSuccess={showJobsSuccess}
+          <ModalJobsSuccess
+            showJobsSuccess={showJobsSuccess}
             setshowJobsSuccess={setshowJobsSuccess}
             jobs={jobs}
             handleComplete={handleComplete}
@@ -208,7 +211,7 @@ function App() {
             handleShowUpdate={handleShowUpdate}
             handleDelete={handleDelete}
           ></ModalJobsSuccess>
-    
+
           <ModalDetail
             showDetail={showDetail}
             handleCloseDetail={handleCloseDetail}
