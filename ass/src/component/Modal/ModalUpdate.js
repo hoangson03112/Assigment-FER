@@ -42,7 +42,7 @@ export function ModalUpdate(props) {
           <Form.Select
             aria-label="Default select example"
             value={props.priority}
-            onChange={(e) => props.setPriority(parseInt(e.target.value))}
+            onChange={(e) => props.setPriority(e.target.value)}
           >
             <option>Chọn mức độ ưu tiên</option>
             <option value="Bình Thường">Bình Thường</option>

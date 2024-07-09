@@ -1,15 +1,26 @@
 // @flow
 import * as React from "react";
 import { Table } from "react-bootstrap";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 export function ModalJobsSuccess(props) {
+  const storedAccount = localStorage.getItem("account");
+  let account;
+  if (storedAccount) {
+    account = JSON.parse(storedAccount);
+  }
+
   const closeJobsSuccess = () => {
     props.setshowJobsSuccess(false);
   };
   return (
-    <div >
-      <Modal  size="xl" animation show={props.showJobsSuccess} onHide={closeJobsSuccess}>
+    <div>
+      <Modal
+        size="xl"
+        animation
+        show={props.showJobsSuccess}
+        onHide={closeJobsSuccess}
+      >
         <Modal.Header closeButton>
           <Modal.Title>Công Việc Đã Hoàn Thành</Modal.Title>
         </Modal.Header>
@@ -30,7 +41,9 @@ export function ModalJobsSuccess(props) {
             </thead>
             <tbody className="table-group-divider table-divider-color">
               {props.jobs
-                .filter((job) => job.isComplete)
+                .filter(
+                  (job) => job.isComplete && job.username === account.username
+                )
                 .map((job, index) => (
                   <tr className="text-center" key={index}>
                     <td>{job.id}</td>
@@ -43,12 +56,6 @@ export function ModalJobsSuccess(props) {
                         onClick={() => props.handleShowDetail(job)}
                       >
                         Chi tiết
-                      </Button>
-                      <Button
-                        variant="success"
-                        onClick={() => props.handleShowUpdate(job)}
-                      >
-                        Sửa
                       </Button>
                       <Button
                         variant="danger"

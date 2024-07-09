@@ -1,20 +1,286 @@
 {
   "jobs": [
     {
-      "id": "20",
-      "name": "vcbv",
-      "description": "vcbcvb",
-      "isComplete": false,
+      "name": "Đi làm",
+      "description": "Đến văn phòng và làm việc",
       "priority": "Bình Thường",
-      "date": "2024-07-13"
+      "date": "2024-07-01",
+      "isComplete": false,
+      "username": "son",
+      "id": "1"
     },
     {
-      "name": "ăn sáng",
-      "description": "ăn sáng",
-      "priority": "Bình Thường",
-      "date": "2024-07-15",
+      "name": "Họp dự án",
+      "description": "Họp với đội dự án về tiến độ",
+      "priority": "Quan Trọng",
+      "date": "2024-07-02",
       "isComplete": true,
+      "username": "son",
+      "id": "2"
+    },
+    {
+      "name": "Đi mua sắm",
+      "description": "Mua sắm đồ dùng cần thiết",
+      "priority": "Rất Quan Trọng",
+      "date": "2024-07-03",
+      "isComplete": false,
+      "username": "son",
+      "id": "3"
+    },
+    {
+      "name": "Đi tập thể dục",
+      "description": "Chạy bộ buổi sáng",
+      "priority": "Bình Thường",
+      "date": "2024-07-04",
+      "isComplete": true,
+      "username": "son",
+      "id": "4"
+    },
+    {
+      "name": "Nấu ăn",
+      "description": "Nấu bữa tối",
+      "priority": "Quan Trọng",
+      "date": "2024-07-05",
+      "isComplete": false,
+      "username": "son",
+      "id": "5"
+    },
+    {
+      "name": "Học bài",
+      "description": "Ôn lại bài học",
+      "priority": "Rất Quan Trọng",
+      "date": "2024-07-06",
+      "isComplete": true,
+      "username": "son",
+      "id": "6"
+    },
+    {
+      "name": "Đọc sách",
+      "description": "Đọc sách về kỹ năng",
+      "priority": "Bình Thường",
+      "date": "2024-07-07",
+      "isComplete": false,
+      "username": "son",
+      "id": "7"
+    },
+    {
+      "name": "Viết blog",
+      "description": "Viết bài blog về công nghệ",
+      "priority": "Quan Trọng",
+      "date": "2024-07-08",
+      "isComplete": true,
+      "username": "son",
+      "id": "8"
+    },
+    {
+      "name": "Gọi điện thoại",
+      "description": "Gọi điện thoại cho khách hàng",
+      "priority": "Rất Quan Trọng",
+      "date": "2024-07-09",
+      "isComplete": false,
+      "username": "son",
+      "id": "9"
+    },
+    {
+      "name": "Đi khám sức khỏe",
+      "description": "Khám tổng quát tại bệnh viện",
+      "priority": "Bình Thường",
+      "date": "2024-07-10",
+      "isComplete": true,
+      "username": "son",
+      "id": "10"
+    },
+    {
+      "name": "Làm bài tập",
+      "description": "Hoàn thành bài tập về nhà",
+      "priority": "Quan Trọng",
+      "date": "2024-07-11",
+      "isComplete": false,
+      "username": "son",
+      "id": "11"
+    },
+    {
+      "name": "Dọn dẹp nhà cửa",
+      "description": "Dọn dẹp phòng khách",
+      "priority": "Rất Quan Trọng",
+      "date": "2024-07-12",
+      "isComplete": true,
+      "username": "son",
+      "id": "12"
+    },
+    {
+      "name": "Tập yoga",
+      "description": "Tập yoga buổi tối",
+      "priority": "Bình Thường",
+      "date": "2024-07-13",
+      "isComplete": false,
+      "username": "son",
+      "id": "13"
+    },
+    {
+      "name": "Xem phim",
+      "description": "Xem phim mới ra rạp",
+      "priority": "Quan Trọng",
+      "date": "2024-07-14",
+      "isComplete": true,
+      "username": "son",
+      "id": "14"
+    },
+    {
+      "name": "Đi cắm trại",
+      "description": "Đi cắm trại cuối tuần",
+      "priority": "Rất Quan Trọng",
+      "date": "2024-07-15",
+      "isComplete": false,
+      "username": "son",
+      "id": "15"
+    },
+    {
+      "name": "Đi làm",
+      "description": "Đến văn phòng và làm việc",
+      "priority": "Bình Thường",
+      "date": "2024-07-16",
+      "isComplete": false,
+      "username": "son1",
+      "id": "16"
+    },
+    {
+      "name": "Họp dự án",
+      "description": "Họp với đội dự án về tiến độ",
+      "priority": "Quan Trọng",
+      "date": "2024-07-17",
+      "isComplete": true,
+      "username": "son1",
+      "id": "17"
+    },
+    {
+      "name": "Đi mua sắm",
+      "description": "Mua sắm đồ dùng cần thiết",
+      "priority": "Rất Quan Trọng",
+      "date": "2024-07-18",
+      "isComplete": false,
+      "username": "son1",
+      "id": "18"
+    },
+    {
+      "name": "Đi tập thể dục",
+      "description": "Chạy bộ buổi sáng",
+      "priority": "Bình Thường",
+      "date": "2024-07-19",
+      "isComplete": true,
+      "username": "son1",
+      "id": "19"
+    },
+    {
+      "name": "Nấu ăn",
+      "description": "Nấu bữa tối",
+      "priority": "Quan Trọng",
+      "date": "2024-07-20",
+      "isComplete": false,
+      "username": "son1",
+      "id": "20"
+    },
+    {
+      "name": "Học bài",
+      "description": "Ôn lại bài học",
+      "priority": "Rất Quan Trọng",
+      "date": "2024-07-21",
+      "isComplete": true,
+      "username": "son1",
       "id": "21"
+    },
+    {
+      "name": "Đọc sách",
+      "description": "Đọc sách về kỹ năng",
+      "priority": "Bình Thường",
+      "date": "2024-07-22",
+      "isComplete": false,
+      "username": "son1",
+      "id": "22"
+    },
+    {
+      "name": "Viết blog",
+      "description": "Viết bài blog về công nghệ",
+      "priority": "Quan Trọng",
+      "date": "2024-07-23",
+      "isComplete": true,
+      "username": "son1",
+      "id": "23"
+    },
+    {
+      "name": "Gọi điện thoại",
+      "description": "Gọi điện thoại cho khách hàng",
+      "priority": "Rất Quan Trọng",
+      "date": "2024-07-24",
+      "isComplete": false,
+      "username": "son1",
+      "id": "24"
+    },
+    {
+      "name": "Đi khám sức khỏe",
+      "description": "Khám tổng quát tại bệnh viện",
+      "priority": "Bình Thường",
+      "date": "2024-07-25",
+      "isComplete": true,
+      "username": "son1",
+      "id": "25"
+    },
+    {
+      "name": "Làm bài tập",
+      "description": "Hoàn thành bài tập về nhà",
+      "priority": "Quan Trọng",
+      "date": "2024-07-26",
+      "isComplete": false,
+      "username": "son1",
+      "id": "26"
+    },
+    {
+      "name": "Dọn dẹp nhà cửa",
+      "description": "Dọn dẹp phòng khách",
+      "priority": "Rất Quan Trọng",
+      "date": "2024-07-27",
+      "isComplete": true,
+      "username": "son1",
+      "id": "27"
+    },
+    {
+      "name": "Tập yoga",
+      "description": "Tập yoga buổi tối",
+      "priority": "Bình Thường",
+      "date": "2024-07-28",
+      "isComplete": false,
+      "username": "son1",
+      "id": "28"
+    },
+    {
+      "name": "Xem phim",
+      "description": "Xem phim mới ra rạp",
+      "priority": "Quan Trọng",
+      "date": "2024-07-29",
+      "isComplete": true,
+      "username": "son1",
+      "id": "29"
+    },
+    {
+      "name": "Đi cắm trại",
+      "description": "Đi cắm trại cuối tuần",
+      "priority": "Rất Quan Trọng",
+      "date": "2024-07-30",
+      "isComplete": false,
+      "username": "son1",
+      "id": "30"
+    }
+  ],
+  "accounts": [
+    {
+      "username": "son",
+      "password": "123",
+      "fullName": "Vũ Hoàng Sơn"
+    },
+    {
+      "username": "son1",
+      "password": "456",
+      "fullName": "Sơn"
     }
   ]
 }

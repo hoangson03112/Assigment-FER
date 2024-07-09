@@ -40,6 +40,7 @@ export function ModalAdd(props) {
             onChange={(e) => props.setDate(e.target.value)}
           />
           <h6 className="my-3">Mức Độ Ưu Tiên</h6>
+          
           <Form.Select
             aria-label="Default select example"
             onChange={(e) => props.setPriority(e.target.value)}

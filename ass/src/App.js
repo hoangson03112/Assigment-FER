@@ -5,10 +5,11 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "./App.css";
-import { ModalAdd } from "./component/ModalAdd";
-import { ModalUpdate } from "./component/ModalUpdate";
-import { ModalDetail } from "./component/ModalDetail";
-import { ModalJobsSuccess } from "./component/ModalJobsSuccess";
+import { ModalAdd } from "./component/Modal/ModalAdd";
+import { ModalUpdate } from "./component/Modal/ModalUpdate";
+import { ModalDetail } from "./component/Modal/ModalDetail";
+import { ModalJobsSuccess } from "./component/Modal/ModalJobsSuccess";
+import { Navbar } from "./component/NavBar/Nav";
 
 function App() {
   const [jobs, setJobs] = useState([]);
@@ -20,8 +21,13 @@ function App() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
+  const [priority, setPriority] = useState();
 
-  const [priority, setPriority] = useState(0);
+  const storedAccount = localStorage.getItem("account");
+  let account;
+  if (storedAccount) {
+    account = JSON.parse(storedAccount);
+  }
 
   const handleCloseAdd = () => setShowAdd(false);
   const handleCloseUpdate = () => {
@@ -53,6 +59,7 @@ function App() {
         priority: job.priority,
         date: job.date,
         isComplete: true,
+        username: account.username,
       })
       .then(function (response) {
         getJobs();
@@ -65,7 +72,6 @@ function App() {
   const handleAdd = () => {
     const newId =
       jobs.length > 0 ? parseInt(jobs[jobs.length - 1].id) + 1 : "1";
-
     axios
       .post("http://localhost:3000/jobs", {
         id: newId + "",
@@ -74,6 +80,7 @@ function App() {
         isComplete: false,
         priority: priority,
         date: date,
+        username: account.username,
       })
       .then(function (response) {
         getJobs();
@@ -104,6 +111,7 @@ function App() {
         priority: priority,
         date: date,
         isComplete: selectedJob.isComplete,
+        username: account.username
       })
       .then(function (response) {
         getJobs();
@@ -129,9 +137,13 @@ function App() {
   };
 
   return (
-    <div id="App">
-      <Row className="w-50">
-        <Col>
+    <div
+      id="App"
+      className="d-flex flex-column justify-content-start align-items-center mt-0 "
+    >
+      <Navbar />
+      <Row className="w-75">
+        <Col xl={12}>
           <h3 className="text-start ">Danh Sách Công Việc</h3>
           <Button
             className="float-start m-4"
@@ -165,7 +177,9 @@ function App() {
             </thead>
             <tbody className="table-group-divider table-divider-color">
               {jobs
-                .filter((job) => !job.isComplete)
+                .filter(
+                  (job) => !job.isComplete && job.username === account.username
+                )
                 .map((job, index) => (
                   <tr className="text-center" key={index}>
                     <td>{index + 1}</td>
