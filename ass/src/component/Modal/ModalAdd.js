@@ -20,6 +20,7 @@ export function ModalAdd(props) {
             placeholder="Tên Công Việc"
             aria-label="name"
             onChange={(e) => props.setName(e.target.value)}
+            required
           />
           <div className="form-group">
             <label htmlFor="description">
@@ -31,19 +32,22 @@ export function ModalAdd(props) {
               id="description"
               rows="3"
               onChange={(e) => props.setDescription(e.target.value)}
+              required
             ></textarea>
           </div>
           <h6>Ngày</h6>
           <input
             name="date"
-            type="date"
+            type="datetime-local"
             onChange={(e) => props.setDate(e.target.value)}
+            required
           />
           <h6 className="my-3">Mức Độ Ưu Tiên</h6>
           
           <Form.Select
             aria-label="Default select example"
             onChange={(e) => props.setPriority(e.target.value)}
+            required
           >
             <option>Chọn mức độ ưu tiên</option>
             <option value="Bình Thường">Bình Thường</option>

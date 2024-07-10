@@ -34,7 +34,7 @@ export function ModalUpdate(props) {
           <h6>Ngày</h6>
           <input
             name="date"
-            type="date"
+            type="datetime-local"
             value={props.date}
             onChange={(e) => props.setDate(e.target.value)}
           />

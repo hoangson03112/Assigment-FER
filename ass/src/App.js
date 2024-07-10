@@ -10,8 +10,11 @@ import { ModalUpdate } from "./component/Modal/ModalUpdate";
 import { ModalDetail } from "./component/Modal/ModalDetail";
 import { ModalJobsSuccess } from "./component/Modal/ModalJobsSuccess";
 import { Navbar } from "./component/NavBar/Nav";
+import { useNavigate } from "react-router-dom";
 
 function App() {
+  const navigate = useNavigate();
+
   const [jobs, setJobs] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
@@ -23,11 +26,20 @@ function App() {
   const [date, setDate] = useState("");
   const [priority, setPriority] = useState();
 
-  const storedAccount = localStorage.getItem("account");
-  let account;
-  if (storedAccount) {
-    account = JSON.parse(storedAccount);
-  }
+  useEffect(() => {
+    const storedAccount = localStorage.getItem("account");
+    if (storedAccount === null) {
+      navigate("/login"); // Ensure to navigate to the correct login path
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    const storedAccount = localStorage.getItem("account");
+    if (storedAccount) {
+      const account = JSON.parse(storedAccount);
+      getJobs(account);
+    }
+  }, []);
 
   const handleCloseAdd = () => setShowAdd(false);
   const handleCloseUpdate = () => {
@@ -41,13 +53,10 @@ function App() {
   const handleShowAdd = () => {
     setShowAdd(true);
   };
-  useEffect(() => {
-    getJobs();
-  }, []);
 
-  const getJobs = () => {
+  const getJobs = (account) => {
     axios.get("http://localhost:3000/jobs").then((res) => {
-      setJobs(res.data);
+      setJobs(res.data.filter((job) => job.username === account.username));
     });
   };
 
@@ -59,69 +68,86 @@ function App() {
         priority: job.priority,
         date: job.date,
         isComplete: true,
-        username: account.username,
+        username: job.username,
       })
       .then(function (response) {
-        getJobs();
+        const storedAccount = localStorage.getItem("account");
+        if (storedAccount) {
+          const account = JSON.parse(storedAccount);
+          getJobs(account);
+        }
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
+
   const handleAdd = () => {
     const newId =
       jobs.length > 0 ? parseInt(jobs[jobs.length - 1].id) + 1 : "1";
-    axios
-      .post("http://localhost:3000/jobs", {
-        id: newId + "",
-        name: name,
-        description: description,
-        isComplete: false,
-        priority: priority,
-        date: date,
-        username: account.username,
-      })
-      .then(function (response) {
-        getJobs();
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const storedAccount = localStorage.getItem("account");
+    if (storedAccount) {
+      const account = JSON.parse(storedAccount);
+      axios
+        .post("http://localhost:3000/jobs", {
+          id: newId + "",
+          name: name,
+          description: description,
+          isComplete: false,
+          priority: priority,
+          date: date,
+          username: account.username,
+        })
+        .then(function (response) {
+          getJobs(account);
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   };
 
   const handleDelete = (job) => {
     axios
       .delete(`http://localhost:3000/jobs/${job.id}`)
       .then(function (response) {
-        getJobs();
+        const storedAccount = localStorage.getItem("account");
+        if (storedAccount) {
+          const account = JSON.parse(storedAccount);
+          getJobs(account);
+        }
         console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
+  };
+  const handleUpdate = () => {
+    const storedAccount = localStorage.getItem("account");
+    if (storedAccount) {
+      const account = JSON.parse(storedAccount);
+      axios
+        .put(`http://localhost:3000/jobs/${selectedJob.id}`, {
+          name: name,
+          description: description,
+          priority: priority,
+          date: date,
+          isComplete: selectedJob.isComplete,
+          username: account.username,
+        })
+        .then(function (response) {
+          getJobs(account);
+          console.log(response);
+          handleCloseUpdate();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   };
 
-  const handleUpdate = () => {
-    axios
-      .put(`http://localhost:3000/jobs/${selectedJob.id}`, {
-        name: name,
-        description: description,
-        priority: priority,
-        date: date,
-        isComplete: selectedJob.isComplete,
-        username: account.username
-      })
-      .then(function (response) {
-        getJobs();
-        console.log(response);
-        handleCloseUpdate();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
   const handleShowDetail = (job) => {
     setShowDetail(true);
     setSelectedJob(job);
@@ -177,9 +203,7 @@ function App() {
             </thead>
             <tbody className="table-group-divider table-divider-color">
               {jobs
-                .filter(
-                  (job) => !job.isComplete && job.username === account.username
-                )
+                .filter((job) => !job.isComplete)
                 .map((job, index) => (
                   <tr className="text-center" key={index}>
                     <td>{index + 1}</td>
