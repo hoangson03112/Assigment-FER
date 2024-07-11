@@ -1,7 +1,7 @@
 import "./FormLogin.css";
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate, Link } from "react-router-dom";
 
 import lodash from "lodash";
 
@@ -53,7 +53,6 @@ export default function Login() {
       PasswordValid &&
       lodash.isEqual(UserNameValid[0], PasswordValid[0])
     ) {
-    
       localStorage.setItem("account", JSON.stringify(UserNameValid[0]));
       navigate("/Home");
     } else {
@@ -106,6 +105,7 @@ export default function Login() {
                       </button>
                     </form>
                   </div>
+                  <Link to={"/register"}>Đăng ký</Link>
                 </div>
               </div>
             </div>

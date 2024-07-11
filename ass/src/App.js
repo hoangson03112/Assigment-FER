@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Table } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Table, Button, Row, Col } from "react-bootstrap";
 import "./App.css";
 import { ModalAdd } from "./component/Modal/ModalAdd";
 import { ModalUpdate } from "./component/Modal/ModalUpdate";
@@ -24,22 +21,25 @@ function App() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
-  const [priority, setPriority] = useState();
+  const [priority, setPriority] = useState("");
+  const [datetoSearch, setDatetoSearch] = useState("");
+  const [account, setAccount] = useState(null); // Sử dụng useState để lưu thông tin tài khoản
 
   useEffect(() => {
+    // Kiểm tra nếu có tài khoản trong localStorage, thì lấy và set vào state
     const storedAccount = localStorage.getItem("account");
-    if (storedAccount === null) {
-      navigate("/login"); // Ensure to navigate to the correct login path
+    if (storedAccount) {
+      setAccount(JSON.parse(storedAccount));
+    } else {
+      navigate("/"); // Nếu không có tài khoản, chuyển hướng đến trang đăng nhập
     }
   }, [navigate]);
 
   useEffect(() => {
-    const storedAccount = localStorage.getItem("account");
-    if (storedAccount) {
-      const account = JSON.parse(storedAccount);
-      getJobs(account);
+    if (account) {
+      getJobs(); // Gọi hàm lấy danh sách công việc khi có tài khoản được set
     }
-  }, []);
+  }, [account]);
 
   const handleCloseAdd = () => setShowAdd(false);
   const handleCloseUpdate = () => {
@@ -54,98 +54,84 @@ function App() {
     setShowAdd(true);
   };
 
-  const getJobs = (account) => {
-    axios.get("http://localhost:3000/jobs").then((res) => {
-      setJobs(res.data.filter((job) => job.username === account.username));
-    });
+  const getJobs = () => {
+    axios
+      .get("http://localhost:3000/jobs")
+      .then((res) => {
+        setJobs(res.data.filter((job) => job.username === account.username));
+      })
+      .catch((error) => {
+        console.error("Error fetching jobs:", error);
+      });
   };
 
   const handleComplete = (job) => {
     axios
       .put(`http://localhost:3000/jobs/${job.id}`, {
-        name: job.name,
-        description: job.description,
-        priority: job.priority,
-        date: job.date,
+        ...job,
         isComplete: true,
-        username: job.username,
       })
-      .then(function (response) {
-        const storedAccount = localStorage.getItem("account");
-        if (storedAccount) {
-          const account = JSON.parse(storedAccount);
-          getJobs(account);
-        }
+      .then((response) => {
+        getJobs();
         console.log(response);
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((error) => {
+        console.error("Error completing job:", error);
       });
   };
 
   const handleAdd = () => {
     const newId =
-      jobs.length > 0 ? parseInt(jobs[jobs.length - 1].id) + 1 : "1";
-    const storedAccount = localStorage.getItem("account");
-    if (storedAccount) {
-      const account = JSON.parse(storedAccount);
-      axios
-        .post("http://localhost:3000/jobs", {
-          id: newId + "",
-          name: name,
-          description: description,
-          isComplete: false,
-          priority: priority,
-          date: date,
-          username: account.username,
-        })
-        .then(function (response) {
-          getJobs(account);
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
+      jobs.length > 0 ? parseInt(jobs[jobs.length - 1].id) + 1+"" : "1";
+    axios
+      .post("http://localhost:3000/jobs", {
+        id: newId + "",
+        name: name,
+        description: description,
+        isComplete: false,
+        priority: priority,
+        date: date,
+        username: account.username,
+      })
+      .then((response) => {
+        getJobs();
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error adding job:", error);
+      });
   };
 
   const handleDelete = (job) => {
     axios
       .delete(`http://localhost:3000/jobs/${job.id}`)
-      .then(function (response) {
-        const storedAccount = localStorage.getItem("account");
-        if (storedAccount) {
-          const account = JSON.parse(storedAccount);
-          getJobs(account);
-        }
+      .then((response) => {
+        getJobs();
         console.log(response);
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((error) => {
+        console.error("Error deleting job:", error);
       });
   };
+
   const handleUpdate = () => {
-    const storedAccount = localStorage.getItem("account");
-    if (storedAccount) {
-      const account = JSON.parse(storedAccount);
-      axios
-        .put(`http://localhost:3000/jobs/${selectedJob.id}`, {
-          name: name,
-          description: description,
-          priority: priority,
-          date: date,
-          isComplete: selectedJob.isComplete,
-          username: account.username,
-        })
-        .then(function (response) {
-          getJobs(account);
-          console.log(response);
-          handleCloseUpdate();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
+    axios
+      .put(`http://localhost:3000/jobs/${selectedJob.id}`, {
+        name: name,
+        description: description,
+        priority: priority,
+        date: date,
+        isComplete: selectedJob.isComplete,
+        username: account.username,
+      })
+      .then((response) => {
+        getJobs();
+        console.log(response);
+        handleCloseUpdate();
+      })
+      .catch((error) => {
+        console.error("Error updating job:", error);
+      });
   };
 
   const handleShowDetail = (job) => {
@@ -162,12 +148,29 @@ function App() {
     setShowUpdate(true);
   };
 
+  const handlSearchbyDate = async () => {
+    try {
+      const jobSearchbyDate = await axios.get(
+        `http://localhost:3000/jobs?date=${datetoSearch}`
+      );
+      if (jobSearchbyDate.data.length !== 0) {
+        setJobs(
+          jobSearchbyDate.data.filter((job) => job.username === account.username)
+        );
+      } else {
+        getJobs(); // Nếu không tìm thấy công việc, hiển thị lại danh sách đầy đủ
+      }
+    } catch (error) {
+      console.error("Error searching jobs by date:", error);
+    }
+  };
+
   return (
     <div
       id="App"
       className="d-flex flex-column justify-content-start align-items-center mt-0 "
     >
-      <Navbar />
+      <Navbar account={account} /> {/* Truyền tài khoản vào Navbar */}
       <Row className="w-75">
         <Col xl={12}>
           <h3 className="text-start ">Danh Sách Công Việc</h3>
@@ -180,6 +183,14 @@ function App() {
           >
             Công việc đã hoàn Thành
           </Button>
+          <input
+            type="date"
+            onChange={(e) => setDatetoSearch(e.target.value)}
+          ></input>
+          <button type="submit" onClick={handlSearchbyDate}>
+            {" "}
+            Tìm!
+          </button>
           <Button
             className="float-end m-4"
             variant="primary"

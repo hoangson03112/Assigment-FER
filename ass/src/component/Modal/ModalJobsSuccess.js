@@ -4,6 +4,7 @@ import { Table } from "react-bootstrap";
 import { Button, Modal } from "react-bootstrap";
 
 export function ModalJobsSuccess(props) {
+  
   const storedAccount = localStorage.getItem("account");
   let account;
   if (storedAccount) {

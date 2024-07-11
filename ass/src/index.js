@@ -5,16 +5,16 @@ import Login from "./component/Login/FormLogin";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-
-
+import  RegisterForm  from "./component/Register/registerForm";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/Home" element={<App/>} />
-        <Route path="/" element={<Login/>} />
+        <Route path="/Home" element={<App />} />
+        <Route path="/register" element={<RegisterForm/>} />
+        <Route path="/" element={<Login />} />
       </Routes>
     </Router>
   </React.StrictMode>
